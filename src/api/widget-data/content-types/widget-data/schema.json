@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "widgets_data",
+  "info": {
+    "singularName": "widget-data",
+    "pluralName": "widgets-data",
+    "displayName": "Widget Data"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "widget": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::widget.widget"
+    },
+    "store": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::store.store"
+    },
+    "data": {
+      "type": "json"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}

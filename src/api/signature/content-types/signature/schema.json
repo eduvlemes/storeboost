@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "signatures",
+  "info": {
+    "singularName": "signature",
+    "pluralName": "signatures",
+    "displayName": "Signature"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "store": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::store.store"
+    },
+    "widget": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::widget.widget"
+    },
+    "signed_by": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "price_at_sign": {
+      "type": "decimal"
+    },
+    "active": {
+      "type": "boolean"
+    }
+  }
+}

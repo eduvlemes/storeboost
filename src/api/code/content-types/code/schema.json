@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "codes",
+  "info": {
+    "singularName": "code",
+    "pluralName": "codes",
+    "displayName": "Code",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "widget": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::widget.widget"
+    },
+    "stores": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::store.store",
+      "mappedBy": "code"
+    },
+    "title": {
+      "type": "string"
+    },
+    "url_js": {
+      "type": "string"
+    },
+    "url_css": {
+      "type": "string"
+    }
+  }
+}
