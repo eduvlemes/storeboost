@@ -1,0 +1,41 @@
+{
+  "kind": "collectionType",
+  "collectionName": "bills",
+  "info": {
+    "singularName": "bill",
+    "pluralName": "bills",
+    "displayName": "Bill"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "store": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::store.store"
+    },
+    "nfe": {
+      "type": "string"
+    },
+    "value": {
+      "type": "decimal"
+    },
+    "payment_method": {
+      "type": "string"
+    },
+    "payment_info": {
+      "type": "json"
+    },
+    "payment_status": {
+      "type": "enumeration",
+      "enum": [
+        "confirmed",
+        "canceled",
+        "awaiting_payment"
+      ],
+      "default": "awaiting_payment"
+    }
+  }
+}

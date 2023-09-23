@@ -65,12 +65,6 @@
       "inversedBy": "users",
       "configurable": false
     },
-    "stores": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::store.store",
-      "inversedBy": "users"
-    },
     "phone": {
       "type": "string"
     },
@@ -94,6 +88,12 @@
     },
     "terms": {
       "type": "boolean"
+    },
+    "store": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::store.store",
+      "inversedBy": "users"
     }
   }
 }

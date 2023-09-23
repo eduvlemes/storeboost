@@ -4,7 +4,8 @@
   "info": {
     "singularName": "store",
     "pluralName": "stores",
-    "displayName": "Store"
+    "displayName": "Store",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -18,14 +19,15 @@
       "type": "string"
     },
     "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     },
     "admin_user": {
       "type": "relation",
@@ -38,15 +40,28 @@
     },
     "users": {
       "type": "relation",
-      "relation": "manyToMany",
+      "relation": "oneToMany",
       "target": "plugin::users-permissions.user",
-      "mappedBy": "stores"
+      "mappedBy": "store"
     },
     "code": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::code.code",
       "inversedBy": "stores"
+    },
+    "doc": {
+      "type": "string"
+    },
+    "platform": {
+      "type": "enumeration",
+      "enum": [
+        "Loja Integrada",
+        "E-com.plus",
+        "Tray",
+        "Bagy/Dooca",
+        "NuvemShop"
+      ]
     }
   }
 }

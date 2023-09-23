@@ -4,7 +4,8 @@
   "info": {
     "singularName": "widget",
     "pluralName": "widgets",
-    "displayName": "Widget"
+    "displayName": "Widget",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -21,18 +22,25 @@
       "type": "decimal"
     },
     "cover": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     },
     "active": {
       "type": "boolean",
       "default": false
+    },
+    "description_long": {
+      "type": "text"
+    },
+    "view": {
+      "type": "uid"
     }
   }
 }
