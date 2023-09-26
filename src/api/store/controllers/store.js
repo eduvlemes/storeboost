@@ -8,7 +8,6 @@ const { createCoreController } = require('@strapi/strapi').factories;
 
 module.exports = createCoreController('api::store.store', ({strapi}) => ({
     async find(ctx){
-        //console.log(ctx)
         const { id } = await strapi.plugins['users-permissions'].services.jwt.getToken(ctx);
         
         const entries = await strapi.entityService.findMany('api::store.store', {
@@ -21,7 +20,6 @@ module.exports = createCoreController('api::store.store', ({strapi}) => ({
 
     },
     async create(ctx){
-        console.log(ctx.request.body)
         const { id } = await strapi.plugins['users-permissions'].services.jwt.getToken(ctx);
         
         //ctx.data.admin_user = id

@@ -9,26 +9,36 @@ const { createCoreController } = require('@strapi/strapi').factories;
 module.exports = createCoreController('api::signature.signature', ({strapi}) => ({
     async find(ctx){
         //console.log(ctx)
-        const { store } = ctx.query;
+        const { store } = ctx.request.query;
         const { id } = await strapi.plugins['users-permissions'].services.jwt.getToken(ctx);
-        const stores = await strapi.db.query('api::store.store').findMany({
-            where:{
+        const isRelated = await strapi.entityService.findMany('api::store.store', {
+            filters:{
                 $or:[
                     {admin_user:id},
                     {users: id}
                 ],
+                store : store
             }
         });
 
-        const store_ = stores.find(el => el.id == store)
+        if(isRelated.length > 0){      
+            ctx.request.query.filters = {
+                store : store
+            }
+            ctx.request.query.populate = "*"
+            const { data, meta } = await super.find(ctx);
+            return { data, meta };
+        }
+        return { data:[], meta:[] }
+        
 
-        const entries = await strapi.entityService.findMany('api::signature.signature', {
-            populate: "*",
-            filters: {                
-                store: store_.id 
-            },
-        });
-        return entries
+        // const entries = await strapi.entityService.findMany('api::signature.signature', {
+        //     populate: "*",
+        //     filters: {                
+        //         store: store_.id 
+        //     },
+        // });
+        // return entries
 
     }    
 }));
