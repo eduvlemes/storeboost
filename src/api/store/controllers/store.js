@@ -12,7 +12,7 @@ module.exports = createCoreController('api::store.store', ({strapi}) => ({
         const { id } = await strapi.plugins['users-permissions'].services.jwt.getToken(ctx);
         
         const entries = await strapi.entityService.findMany('api::store.store', {
-            populate: ['admin_user', 'users','logo'],
+            populate: ['admin_user', 'users','logo','invoice_data'],
             filters: {                
                 admin_user: id 
             },
@@ -34,8 +34,15 @@ module.exports = createCoreController('api::store.store', ({strapi}) => ({
                 admin_user: [id]
             }
         });
+
+        const entries = await strapi.entityService.findMany('api::store.store', {
+            populate: ['admin_user', 'users','logo','invoice_data'],
+            filters: {                
+                id: create.data.id
+            },
+        });
+        return entries        
         
-        return response
     }
 }));
 

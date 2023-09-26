@@ -62,6 +62,12 @@
         "Bagy/Dooca",
         "NuvemShop"
       ]
+    },
+    "invoice_data": {
+      "displayName": "invoice_data",
+      "type": "component",
+      "repeatable": false,
+      "component": "invoice-data.invoice-data"
     }
   }
 }

@@ -4,7 +4,8 @@
   "info": {
     "singularName": "bill",
     "pluralName": "bills",
-    "displayName": "Bill"
+    "displayName": "Bill",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -36,6 +37,9 @@
         "awaiting_payment"
       ],
       "default": "awaiting_payment"
+    },
+    "due_date": {
+      "type": "date"
     }
   }
 }

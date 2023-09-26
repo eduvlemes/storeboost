@@ -1,0 +1,36 @@
+{
+  "collectionName": "components_invoice_data_invoice_data",
+  "info": {
+    "displayName": "invoice_data"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "doc": {
+      "type": "string"
+    },
+    "zip": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "address_2": {
+      "type": "string"
+    },
+    "number": {
+      "type": "integer"
+    },
+    "state": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "district": {
+      "type": "string"
+    }
+  }
+}
