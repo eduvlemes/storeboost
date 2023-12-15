@@ -36,11 +36,17 @@
       "type": "boolean",
       "default": false
     },
-    "description_long": {
-      "type": "text"
-    },
     "view": {
       "type": "uid"
+    },
+    "platform": {
+      "displayName": "platforms",
+      "type": "component",
+      "repeatable": true,
+      "component": "platform.platforms"
+    },
+    "description_long": {
+      "type": "richtext"
     }
   }
 }

@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_platform_platforms",
+  "info": {
+    "displayName": "platforms"
+  },
+  "options": {},
+  "attributes": {
+    "available_platform": {
+      "type": "enumeration",
+      "enum": [
+        "Loja Integrada",
+        "E-com.plus",
+        "Bagy"
+      ]
+    }
+  }
+}
