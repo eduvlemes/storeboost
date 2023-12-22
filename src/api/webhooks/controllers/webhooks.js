@@ -30,14 +30,15 @@ module.exports = {
     
     
             if (widgetInstallation) {
+                console.log('widgetInstallation',widgetInstallation)
                 let storeFolder = await strapi.query('plugin::upload.folder').findOne({where: {name: `${widgetInstallation[0].store.id}`}});
                 if (!storeFolder) {
+                    console.log('storeFolder',storeFolder)
                     await folderService.create({name: `${widgetInstallation[0].store.id}`})
                     storeFolder = await strapi.query('plugin::upload.folder').findOne({where: {name: `${widgetInstallation[0].store.id}`}});
                 }
                 try{
-
-                    
+                    console.log('entrou também')                   
                     const uploadedFiles = await strapi.plugins.upload.services.upload.upload({
                         data: {
                         field: 'images', // your collection image field name
@@ -46,6 +47,7 @@ module.exports = {
                         files: files,
                     });
                     if(uploadedFiles){
+                        console.log('entrou também 2')                   
                         const entry = await strapi.entityService.create('api::widget-data.widget-data', {
                             data:{
                             store:widgetInstallation[0].store.id,
