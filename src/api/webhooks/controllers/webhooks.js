@@ -12,7 +12,7 @@ module.exports = {
     //console.log('next-----', next)
     //console.log('host-----', ctx.request.header.origin)
     
-    //try{
+    try{
         const { files } = ctx.request.files;
         if(files){
             const widgetInstallation = await strapi.entityService.findMany('api::signature.signature', {
@@ -41,9 +41,7 @@ module.exports = {
                     },
                     files: files,
                 });
-                console.log('uploadedFiles',uploadedFiles)
                 if(uploadedFiles){
-                    //console.log('entrou também 2')                   
                     const entry = await strapi.entityService.create('api::widget-data.widget-data', {
                         data:{
                         store:widgetInstallation[0].store.id,
@@ -63,12 +61,11 @@ module.exports = {
             } else {
                 ctx.body = { err: true, msg: 'App não contratado' };
             }
-            //ctx.body = JSON.stringify(widgetEnabled)
         }else{
             ctx.body = {err:true,msg:'Nenhum arquivo enviado'}
         }        
-    //}catch (err) {
-        //ctx.body = {err:true,msg:'errrrou ' + err};
-    //}
+    }catch (err) {
+        ctx.body = {err:true,msg:'errrrou ' + err};
+    }
   }
 };
