@@ -12,10 +12,9 @@ module.exports = {
     //console.log('next-----', next)
     //console.log('host-----', ctx.request.header.origin)
     
-    try{
-        const { files }  = ctx.request.files;
+    //try{
+        const { files } = ctx.request.files;
         if(files){
-            //console.log('entrou')
             const widgetInstallation = await strapi.entityService.findMany('api::signature.signature', {
                 populate: ['store'],
                 filters: {                
@@ -30,56 +29,46 @@ module.exports = {
     
     
             if (widgetInstallation) {
-                //console.log('widgetInstallation',widgetInstallation)
                 let storeFolder = await strapi.query('plugin::upload.folder').findOne({where: {name: `${widgetInstallation[0].store.id}`}});
                 if (!storeFolder) {
-                    //console.log('storeFolder',storeFolder)
                     await folderService.create({name: `${widgetInstallation[0].store.id}`})
                     storeFolder = await strapi.query('plugin::upload.folder').findOne({where: {name: `${widgetInstallation[0].store.id}`}});
                 }
-                //try{
-                    //console.log('entrou também')                   
-                    const uploadedFiles = await strapi.plugins.upload.services.upload.upload({
-                        data: {
-                        field: 'images', // your collection image field name
-                        fileInfo: { folder: storeFolder.id }, // if you want assign a folder
+                const uploadedFiles = await strapi.plugins.upload.services.upload.upload({
+                    data: {
+                    field: 'images', // your collection image field name
+                    fileInfo: { folder: storeFolder.id }, // if you want assign a folder
+                    },
+                    files: files,
+                });
+                console.log('uploadedFiles',uploadedFiles)
+                if(uploadedFiles){
+                    //console.log('entrou também 2')                   
+                    const entry = await strapi.entityService.create('api::widget-data.widget-data', {
+                        data:{
+                        store:widgetInstallation[0].store.id,
+                        widget:7,
+                        active:true,
+                        data:{
+                            image:uploadedFiles,
+                            origin: ctx.request.ip,
                         },
-                        files: files,
-                    });
-                    console.log('uploadedFiles',uploadedFiles)
-                    if(uploadedFiles){
-                        //console.log('entrou também 2')                   
-                        const entry = await strapi.entityService.create('api::widget-data.widget-data', {
-                            data:{
-                            store:widgetInstallation[0].store.id,
-                            widget:7,
-                            active:true,
-                            data:{
-                                image:uploadedFiles,
-                                origin: ctx.request.ip,
-                            },
-                            publishedAt: new Date().toISOString()      
-                            }
-                        }); 
-                        ctx.body = { err: false, response: entry };
-                    }else{
-                        ctx.body = { err: true, response: 'Falha no upload' };
-                    }
-                //}catch (err) {
-                    //ctx.body = {err:true,msg:'errrrou ' + err};
-                //}
-                ////console.log('uploaded',uploadedFiles)
-                
+                        publishedAt: new Date().toISOString()      
+                        }
+                    }); 
+                    ctx.body = { err: false, response: entry };
+                }else{
+                    ctx.body = { err: true, response: 'Falha no upload' };
+                }
             } else {
                 ctx.body = { err: true, msg: 'App não contratado' };
             }
             //ctx.body = JSON.stringify(widgetEnabled)
         }else{
             ctx.body = {err:true,msg:'Nenhum arquivo enviado'}
-        }
-        
-    }catch (err) {
-        ctx.body = {err:true,msg:'errrrou ' + err};
-    }
+        }        
+    //}catch (err) {
+        //ctx.body = {err:true,msg:'errrrou ' + err};
+    //}
   }
 };
