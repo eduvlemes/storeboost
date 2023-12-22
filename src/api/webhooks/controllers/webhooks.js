@@ -8,14 +8,14 @@ const { Readable } = require("stream");
 const folderService = strapi.plugins.upload.services.folder;
 module.exports = {
   fileUpload: async (ctx, next) => {
-    console.log('ctx-----', ctx.request.files)
-    console.log('next-----', next)
-    console.log('host-----', ctx.request.header.origin)
+    //console.log('ctx-----', ctx.request.files)
+    //console.log('next-----', next)
+    //console.log('host-----', ctx.request.header.origin)
     
     try{
         const { files }  = ctx.request.files;
         if(files){
-            console.log('entrou')
+            //console.log('entrou')
             const widgetInstallation = await strapi.entityService.findMany('api::signature.signature', {
                 populate: ['store'],
                 filters: {                
@@ -30,15 +30,15 @@ module.exports = {
     
     
             if (widgetInstallation) {
-                console.log('widgetInstallation',widgetInstallation)
+                //console.log('widgetInstallation',widgetInstallation)
                 let storeFolder = await strapi.query('plugin::upload.folder').findOne({where: {name: `${widgetInstallation[0].store.id}`}});
                 if (!storeFolder) {
-                    console.log('storeFolder',storeFolder)
+                    //console.log('storeFolder',storeFolder)
                     await folderService.create({name: `${widgetInstallation[0].store.id}`})
                     storeFolder = await strapi.query('plugin::upload.folder').findOne({where: {name: `${widgetInstallation[0].store.id}`}});
                 }
-                try{
-                    console.log('entrou também')                   
+                //try{
+                    //console.log('entrou também')                   
                     const uploadedFiles = await strapi.plugins.upload.services.upload.upload({
                         data: {
                         field: 'images', // your collection image field name
@@ -46,8 +46,9 @@ module.exports = {
                         },
                         files: files,
                     });
+                    console.log('uploadedFiles',uploadedFiles)
                     if(uploadedFiles){
-                        console.log('entrou também 2')                   
+                        //console.log('entrou também 2')                   
                         const entry = await strapi.entityService.create('api::widget-data.widget-data', {
                             data:{
                             store:widgetInstallation[0].store.id,
@@ -64,10 +65,10 @@ module.exports = {
                     }else{
                         ctx.body = { err: true, response: 'Falha no upload' };
                     }
-                }catch (err) {
-                    ctx.body = {err:true,msg:'errrrou ' + err};
-                }
-                //console.log('uploaded',uploadedFiles)
+                //}catch (err) {
+                    //ctx.body = {err:true,msg:'errrrou ' + err};
+                //}
+                ////console.log('uploaded',uploadedFiles)
                 
             } else {
                 ctx.body = { err: true, msg: 'App não contratado' };
