@@ -14,8 +14,6 @@ module.exports = {
     
     try{
         const { files }  = ctx.request.files;
-        console.log(files)
-        console.log(files.length)
         if(files){
             console.log('entrou')
             const widgetInstallation = await strapi.entityService.findMany('api::signature.signature', {
@@ -37,29 +35,35 @@ module.exports = {
                     await folderService.create({name: `${widgetInstallation[0].store.id}`})
                     storeFolder = await strapi.query('plugin::upload.folder').findOne({where: {name: `${widgetInstallation[0].store.id}`}});
                 }
-                const uploadedFiles = await strapi.plugins.upload.services.upload.upload({
-                    data: {
-                      field: 'images', // your collection image field name
-                      fileInfo: { folder: storeFolder.id }, // if you want assign a folder
-                    },
-                    files: files,
-                });
-                if(uploadedFiles){
-                    const entry = await strapi.entityService.create('api::widget-data.widget-data', {
-                        data:{
-                          store:widgetInstallation[0].store.id,
-                          widget:7,
-                          active:true,
-                          data:{
-                            image:uploadedFiles,
-                            origin: ctx.request.ip,
-                          },
-                          publishedAt: new Date().toISOString()      
-                        }
-                    }); 
-                    ctx.body = { err: false, response: entry };
-                }else{
-                    ctx.body = { err: true, response: 'Falha no upload' };
+                try{
+
+                    
+                    const uploadedFiles = await strapi.plugins.upload.services.upload.upload({
+                        data: {
+                        field: 'images', // your collection image field name
+                        fileInfo: { folder: storeFolder.id }, // if you want assign a folder
+                        },
+                        files: files,
+                    });
+                    if(uploadedFiles){
+                        const entry = await strapi.entityService.create('api::widget-data.widget-data', {
+                            data:{
+                            store:widgetInstallation[0].store.id,
+                            widget:7,
+                            active:true,
+                            data:{
+                                image:uploadedFiles,
+                                origin: ctx.request.ip,
+                            },
+                            publishedAt: new Date().toISOString()      
+                            }
+                        }); 
+                        ctx.body = { err: false, response: entry };
+                    }else{
+                        ctx.body = { err: true, response: 'Falha no upload' };
+                    }
+                }catch (err) {
+                    ctx.body = {err:true,msg:'errrrou ' + err};
                 }
                 //console.log('uploaded',uploadedFiles)
                 
