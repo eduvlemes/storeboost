@@ -1,3 +1,5 @@
+const checkWidgetInstallationPolicy = require('../../../src/config/policies/checkWidgetInstallation');
+
 module.exports = {
     routes: [
       {
@@ -5,7 +7,7 @@ module.exports = {
        path: '/webhooks/file-upload',
        handler: 'webhooks.fileUpload',
        config: {
-         policies: [],
+         policies: [checkWidgetInstallationPolicy],
          middlewares: [],
        },
       },
