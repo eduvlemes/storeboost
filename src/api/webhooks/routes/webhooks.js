@@ -1,4 +1,7 @@
-const checkWidgetInstallationPolicy = require('../../../src/config/policies/checkWidgetInstallation');
+//const checkWidgetInstallationPolicy = require('./../../../config/policies/checkWidgetInstallation');
+const path = require('path');
+const checkWidgetInstallationPolicy = require(path.resolve(__dirname, '../../../config/policies/checkWidgetInstallation'));
+
 
 module.exports = {
     routes: [

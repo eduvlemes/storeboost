@@ -8,23 +8,16 @@ module.exports = async (ctx, next) => {
             $contains: ctx.request.header.origin
           },
         },
-        widget: ctx.request.headers['app-id'],
+        widget: ctx.request.headers['app-id'] || 0,
       },
     });
 
-    console.log(widgetInstallation)
-
     if (widgetInstallation.length === 0) {
-      ctx.status = 401; // Unauthorized
-      ctx.body = 'A instalação do widget não foi encontrada.';
-      return;
+      return false;
     }
 
-    // Se a condição for atendida, continue para o próximo middleware ou rota
-    await next();
+    return true;
   } catch (error) {
-    ctx.status = 401; // Unauthorized
-    ctx.body = error.message || 'Erro não autorizado.';
+    return false;
   }
 };
- 
